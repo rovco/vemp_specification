@@ -1,0 +1,74 @@
+{
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string"
+    },
+    "download": {
+      "type": "object",
+      "properties": {
+        "source": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "source",
+        "id"
+      ],
+      "additionalProperties": false
+    },
+    "input": {
+      "type": "object",
+      "properties": {
+        "camera": {
+          "enum": [
+            "left",
+            "right",
+            "any"
+          ]
+        },
+        "resize": {
+          "enum": [
+            "squish",
+            "crop"
+          ]
+        }
+      },
+      "required": [
+        "camera",
+        "resize"
+      ],
+      "additionalProperties": false
+    },
+    "output": {
+      "type": "object",
+      "properties": {
+        "raw": {
+          "type": "boolean"
+        },
+        "ros": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "raw",
+        "ros"
+      ],
+      "additionalProperties": false
+    },
+    "cache_dir": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "version",
+    "input",
+    "output"
+  ],
+  "additionalProperties": false
+}

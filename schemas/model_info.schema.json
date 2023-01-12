@@ -1,0 +1,44 @@
+{
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "type": {
+      "enum": [
+        "multi_task"
+      ]
+    },
+    "tasks": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "anyOf": [
+              {
+                "const": "classification"
+              },
+              {
+                "const": "segmentation"
+              },
+              {
+                "const": "detection"
+              }
+            ]
+          },
+          "classes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "type",
+    "tasks"
+  ],
+  "additionalProperties": false
+}
