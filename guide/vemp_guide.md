@@ -12,7 +12,7 @@ Open Neural Network Exchange ([ONNX](https://github.com/onnx/onnx)) is an open s
 VEMP specification bases itself on ONNX, but note that SubSLAM does not support all possible variations of ONNX files. VEMP specification defines a subset of the broader ONNX standard, along with a common structure and files.
 
 ### TensorRT
-[TensorRT](https://developer.nvidia.com/tensorrt) is a high performance SDK for deep learning that optimizes models for NVIDIA hardware. The system uses [onnx-tensorrt](https://github.com/onnx/onnx-tensorrt) runtime to execute models, which only supports a subset of the ONNX operators. Operators refer to a node/layer/module in the model that performs an action. It is important to check the [documentation](https://github.com/onnx/onnx-tensorrt/blob/8.0-GA/docs/operators.md#operator-support-matrix) to ensure the model uses supported operators only.
+[TensorRT](https://developer.nvidia.com/tensorrt) is a high performance SDK for deep learning that optimizes models for NVIDIA hardware. The system uses [onnx-tensorrt](https://github.com/onnx/onnx-tensorrt) runtime to execute models, which only supports a subset of the ONNX operators. Operators refer to a node/layer/module in the model that performs an action. It is important to check the [documentation](https://github.com/onnx/onnx-tensorrt/blob/8.5-GA/docs/operators.md#operator-support-matrix) to ensure the model uses supported operators only.
 
 ### Model Architecture
 VEMP supports multitask learning, which allows the same model to perform many tasks. These tasks have different expected outputs, see the [specification](../specification/vemp_specification.md) for more details.
@@ -76,12 +76,12 @@ Trtexec is also used to benchmark inference latency. This is an important consid
 
 Requirements:
 - Nvidia GPU 10XX or greater, with >2GB VRAM.
-- Ubuntu 18.04.
+- Ubuntu 20.04.
 - Docker
 
 Run this docker command to execute the model (Note: change the model path):
 ```
-docker run --gpus all -it --rm -v </path/to/model.onnx>:/workspace/model.onnx nvcr.io/nvidia/tensorrt:21.08-py3 /usr/src/tensorrt/bin/trtexec --onnx=/workspace/model.onnx --explicitBatch --workspace=1024 --fp16
+docker run --gpus all -it --rm -v </path/to/model.onnx>:/workspace/model.onnx nvcr.io/nvidia/tensorrt:23.03-py3 /usr/src/tensorrt/bin/trtexec --onnx=/workspace/model.onnx --explicitBatch --workspace=1024 --fp16
 ```
 
 This command can take up to 10 minutes, depending on the model complexity and hardware available.
@@ -146,5 +146,5 @@ Please contact [Vaarst support](mailto:support@vaarst.com) for further instructi
 
 ---
 <p align=center>
-Copyright Vaarst © 2022
+Copyright Vaarst © 2023
 <p/>

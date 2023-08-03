@@ -107,7 +107,7 @@ The `model.onnx` file is the trained model, containing the graph and weights. Th
 
 ##### Requirements
 - Uses ONNX Opset version <= 13.
-- Uses onnx-tensorrt v8.0.1 [supported operators](https://github.com/onnx/onnx-tensorrt/blob/8.0-GA/docs/operators.md#operator-support-matrix).
+- Uses onnx-tensorrt v8.5.3 [supported operators](https://github.com/onnx/onnx-tensorrt/blob/8.5-GA/docs/operators.md#operator-support-matrix).
 - Uses fixed dimensions and a batch size of 1.
 - Input and Outputs buffers conform to the specification below.
 
@@ -167,7 +167,7 @@ Semantic segmentation output, predicting a segmentation map for a given image.
 <br/>
   <summary>Detection Task</summary>
 
-Object detection output, predicting bounding boxes for a given image. NMS should already be applied to the output.
+Object detection output, predicting bounding boxes for a given image. NMS must be applied to the output.
 
 ###### 1. Boxes Buffer
 | | |
@@ -198,10 +198,10 @@ Object detection output, predicting bounding boxes for a given image. NMS should
 | Type | `int32` |
 | Range | `[0, max boxes]` |
 
-*Hint: The indices produced by NonMaximumSupression for the bounding box predictions. More info see [ONNX operators](https://github.com/onnx/onnx/blob/main/docs/Operators.md#NonMaxSuppression) and [TensorRT ONNX operators](https://github.com/onnx/onnx-tensorrt/blob/main/docs/operators.md)*
+*Hint: The indices produced by NonMaximumSupression for the bounding box predictions, see [ONNX operators](https://github.com/onnx/onnx/blob/main/docs/Operators.md#NonMaxSuppression). For more details, see the [EfficientNMS_ONNX_TRT](https://github.com/NVIDIA/TensorRT/tree/release/8.5/plugin/efficientNMSPlugin) plugin which is used by TensorRT for NMS.*
 </details>
 
 ---
 <p align=center>
-Copyright Vaarst © 2022
+Copyright Vaarst © 2023
 <p/>

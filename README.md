@@ -12,5 +12,5 @@ The VEMP specification defines the structure of machine learning models deployab
 
 ---
 <p align=center>
-Copyright Vaarst © 2022
+Copyright Vaarst © 2023
 <p/>
