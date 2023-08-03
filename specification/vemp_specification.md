@@ -159,7 +159,7 @@ Semantic segmentation output, predicting a segmentation map for a given image.
 | Type | `int32` |
 | Range | `[0, class count]` |
 
-*Hint: A map of indices from ArgMaxed predictions.*
+*Hint: A map of indices from arg-maxed predictions.*
 
 </details>
 
