@@ -12,7 +12,7 @@ Open Neural Network Exchange ([ONNX](https://github.com/onnx/onnx)) is an open s
 VEMP specification bases itself on ONNX, but note that SubSLAM does not support all possible variations of ONNX files. VEMP specification defines a subset of the broader ONNX standard, along with a common structure and files.
 
 ### TensorRT
-[TensorRT](https://developer.nvidia.com/tensorrt) is a high performance SDK for deep learning that optimizes models for NVIDIA hardware. The system uses [onnx-tensorrt](https://github.com/onnx/onnx-tensorrt) runtime to execute models, which only supports a subset of the ONNX operators. Operators refer to a node/layer/module in the model that performs an action. It is important to check the [documentation](https://github.com/onnx/onnx-tensorrt/blob/8.0-GA/docs/operators.md#operator-support-matrix) to ensure the model uses supported operators only.
+[TensorRT](https://developer.nvidia.com/tensorrt) is a high performance SDK for deep learning that optimizes models for NVIDIA hardware. The system uses [onnx-tensorrt](https://github.com/onnx/onnx-tensorrt) runtime to execute models, which only supports a subset of the ONNX operators. Operators refer to a node/layer/module in the model that performs an action. It is important to check the [documentation](https://github.com/onnx/onnx-tensorrt/blob/8.5-GA/docs/operators.md#operator-support-matrix) to ensure the model uses supported operators only.
 
 ### Model Architecture
 VEMP supports multitask learning, which allows the same model to perform many tasks. These tasks have different expected outputs, see the [specification](../specification/vemp_specification.md) for more details.
@@ -50,7 +50,7 @@ It is not always possible to export an ONNX model that conforms exactly to the s
 This is also an opportunity to further simplify and optimize the graph.
 
 #### Graphsurgeon
-The [onnx-graphsurgeon](https://docs.nvidia.com/deeplearning/tensorrt/onnx-graphsurgeon/docs/index.html) Python package
+The [`onnx-graphsurgeon`](https://docs.nvidia.com/deeplearning/tensorrt/onnx-graphsurgeon/docs/index.html) Python package
 provides a convenient way to create and modify ONNX models. It also provides useful methods to optimise the models:
 
 - `graph.cleanup()` - Removes unused nodes and tensors, i.e. nodes that do not contribute to the model output.
@@ -76,12 +76,12 @@ Trtexec is also used to benchmark inference latency. This is an important consid
 
 Requirements:
 - Nvidia GPU 10XX or greater, with >2GB VRAM.
-- Ubuntu 18.04.
+- Ubuntu 20.04.
 - Docker
 
 Run this docker command to execute the model (Note: change the model path):
 ```
-docker run --gpus all -it --rm -v </path/to/model.onnx>:/workspace/model.onnx nvcr.io/nvidia/tensorrt:21.08-py3 /usr/src/tensorrt/bin/trtexec --onnx=/workspace/model.onnx --explicitBatch --workspace=1024 --fp16
+docker run --gpus all -it --rm -v </path/to/model.onnx>:/workspace/model.onnx nvcr.io/nvidia/tensorrt:23.03-py3 /usr/src/tensorrt/bin/trtexec --onnx=/workspace/model.onnx --explicitBatch --workspace=1024 --fp16
 ```
 
 This command can take up to 10 minutes, depending on the model complexity and hardware available.
@@ -89,25 +89,25 @@ This command can take up to 10 minutes, depending on the model complexity and ha
 It will return `PASSED` when the ONNX model is valid and can be run with TensorRT.
 
 <details>
-  <summary>Example of Trtexec output </summary>
+  <summary>Example of successful trtexec output</summary>
 
 ```
-[12/19/2022-11:20:20] [I] === Performance summary ===
-[12/19/2022-11:20:20] [I] Throughput: 197.878 qps
-[12/19/2022-11:20:20] [I] Latency: min = 5.10516 ms, max = 6.27979 ms, mean = 5.28241 ms, median = 5.19092 ms, percentile(99%) = 5.90356 ms
-[12/19/2022-11:20:20] [I] End-to-End Host Latency: min = 5.2265 ms, max = 6.39758 ms, mean = 5.40171 ms, median = 5.30881 ms, percentile(99%) = 6.026 ms
-[12/19/2022-11:20:20] [I] Enqueue Time: min = 4.86603 ms, max = 6.11346 ms, mean = 5.03708 ms, median = 4.94507 ms, percentile(99%) = 5.65833 ms
-[12/19/2022-11:20:20] [I] H2D Latency: min = 0.129028 ms, max = 0.165039 ms, mean = 0.1389 ms, median = 0.136719 ms, percentile(99%) = 0.157227 ms
-[12/19/2022-11:20:20] [I] GPU Compute Time: min = 4.86914 ms, max = 6.0304 ms, mean = 5.0506 ms, median = 4.95825 ms, percentile(99%) = 5.66577 ms
-[12/19/2022-11:20:20] [I] D2H Latency: min = 0.0853271 ms, max = 0.116913 ms, mean = 0.092908 ms, median = 0.0919189 ms, percentile(99%) = 0.108887 ms
-[12/19/2022-11:20:20] [I] Total Host Walltime: 3.01195 s
-[12/19/2022-11:20:20] [I] Total GPU Compute Time: 3.01016 s
-[12/19/2022-11:20:20] [W] * Throughput may be bound by Enqueue Time rather than GPU Compute and the GPU may be under-utilized.
-[12/19/2022-11:20:20] [W]   If not already in use, --useCudaGraph (utilize CUDA graphs where possible) may increase the throughput.
-[12/19/2022-11:20:20] [I] Explanations of the performance metrics are printed in the verbose logs.
-[12/19/2022-11:20:20] [I]
-&&&& PASSED TensorRT.trtexec [TensorRT v8001] # /usr/src/tensorrt/bin/trtexec --onnx=/workspace/model.onnx --explicitBatch --workspace=1024 --fp16
-[12/19/2022-11:20:20] [I] [TRT] [MemUsageChange] Init cuBLAS/cuBLASLt: CPU +0, GPU +0, now: CPU 2626, GPU 5211 (MiB)
+[08/03/2023-10:27:37] [I] === Performance summary ===
+[08/03/2023-10:27:37] [I] Throughput: 352.359 qps
+[08/03/2023-10:27:37] [I] Latency: min = 2.4798 ms, max = 4.60217 ms, mean = 2.83884 ms, median = 2.78979 ms, percentile(90%) = 3.23047 ms, percentile(95%) = 3.39697 ms, percentile(99%) = 3.7373 ms
+[08/03/2023-10:27:37] [I] Enqueue Time: min = 2.41815 ms, max = 4.53247 ms, mean = 2.77454 ms, median = 2.7265 ms, percentile(90%) = 3.15723 ms, percentile(95%) = 3.32654 ms, percentile(99%) = 3.66919 ms
+[08/03/2023-10:27:37] [I] H2D Latency: min = 0.135254 ms, max = 0.162109 ms, mean = 0.140114 ms, median = 0.13916 ms, percentile(90%) = 0.144043 ms, percentile(95%) = 0.146973 ms, percentile(99%) = 0.155121 ms
+[08/03/2023-10:27:37] [I] GPU Compute Time: min = 2.29224 ms, max = 4.41431 ms, mean = 2.64781 ms, median = 2.59973 ms, percentile(90%) = 3.0365 ms, percentile(95%) = 3.20203 ms, percentile(99%) = 3.54492 ms
+[08/03/2023-10:27:37] [I] D2H Latency: min = 0.0441895 ms, max = 0.147827 ms, mean = 0.0509221 ms, median = 0.050293 ms, percentile(90%) = 0.0541992 ms, percentile(95%) = 0.0561829 ms, percentile(99%) = 0.0634766 ms
+[08/03/2023-10:27:37] [I] Total Host Walltime: 3.00546 s
+[08/03/2023-10:27:37] [I] Total GPU Compute Time: 2.80403 s
+[08/03/2023-10:27:37] [W] * Throughput may be bound by Enqueue Time rather than GPU Compute and the GPU may be under-utilized.
+[08/03/2023-10:27:37] [W]   If not already in use, --useCudaGraph (utilize CUDA graphs where possible) may increase the throughput.
+[08/03/2023-10:27:37] [W] * GPU compute time is unstable, with coefficient of variance = 10.6806%.
+[08/03/2023-10:27:37] [W]   If not already in use, locking GPU clock frequency or adding --useSpinWait may improve the stability.
+[08/03/2023-10:27:37] [I] Explanations of the performance metrics are printed in the verbose logs.
+[08/03/2023-10:27:37] [I]
+&&&& PASSED TensorRT.trtexec [TensorRT v8503] # /usr/src/tensorrt/bin/trtexec --onnx=/workspace/model.onnx --explicitBatch --workspace=1024 --fp16
 ```
 
 </details>
@@ -146,5 +146,5 @@ Please contact [Vaarst support](mailto:support@vaarst.com) for further instructi
 
 ---
 <p align=center>
-Copyright Vaarst © 2022
+Copyright Vaarst © 2023
 <p/>
