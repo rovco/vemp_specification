@@ -161,6 +161,14 @@ Semantic segmentation output, predicting a segmentation map for a given image.
 
 *Hint: A map of indices from arg-maxed predictions.*
 
+###### 2. Confidence Buffer
+| | |
+| --- | --- |
+| Name | `<task_name>_confidence` |
+| Dims | `[1(batch size)]` |
+| Type | `float32` |
+| Range | `[0.0, 1.0]` |
+
 </details>
 
 <details>
